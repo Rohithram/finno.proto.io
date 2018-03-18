@@ -118,6 +118,24 @@ angular.module('protoApp')
     }))
   }
 
+  var des;
+  // function getgoodName(id){
+  $scope.getgoodName = function(id) {
+      return $http.get("http://52.87.34.178:3000/api/Goods/"+id)
+             .then(
+                function (response) {
+                  return {
+                     Description: response.data.Description,
+                     goodsId:  response.data.GoodsID
+                  };
+                },
+                function (httpError) {
+                   // translate the error
+                   throw httpError.status + " : " + 
+                         httpError.data;
+                });
+};
+
   function filterAcceptedones(fin_reqs,offer){
     console.log(fin_reqs);
     for(var i=0;i<fin_reqs.length;i++){
@@ -134,12 +152,19 @@ angular.module('protoApp')
             financing = fin_reqs[i].financing;
             request = fin_reqs[i].request;
           }
+
+          var good = {};
+          good = $scope.getgoodName(offer.goods.split('#')[1]);
+         
+          console.log(good);
+
           var tran = 
           {
           'ListingID':offer.ListingID,
           'quantity':offer.quantity,
-          'retailer':offer.retailer,
+          'retailer':offer.retailer.split('#')[1],
           'goodsId':offer.goods.split('#')[1],
+          'des':good.Description,
           'state':offer.state,
           'status':offer.state1,
           'price':offer.Price,
@@ -149,6 +174,7 @@ angular.module('protoApp')
           'finSup':financing,
           'finStatus':request
           };
+
           console.log("CJECK"+i);
           trans.push(tran);  
         }else{

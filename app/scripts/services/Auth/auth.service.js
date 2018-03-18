@@ -177,7 +177,7 @@ angular.module('authServices',[])
   };
 
 
-  authTokenfactory.postgoods = function(good){
+  authTokenfactory.postgoods = function(good){  
     return $http.post("http://52.87.34.178:3000/api/Goods",good).then((res =>{
       console.log("goods created");
     })); 

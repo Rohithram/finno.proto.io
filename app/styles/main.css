@@ -58,7 +58,6 @@
 
     color: rgb(34, 29, 29);
     text-transform: uppercase;
-
   }
 
   .sub-sub-title{
@@ -76,6 +75,7 @@
     margin-top: 20px;
     text-transform: uppercase;
   }
+
   .common-flex{
     padding: 0px;
     min-width: 100%;
@@ -97,7 +97,6 @@
     text-transform: uppercase;  
   }
   
-
   .headline::after{
     content: "";
     width: 60px;

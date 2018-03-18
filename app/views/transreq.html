@@ -42,10 +42,11 @@
                     <thead>
                         <tr>
                             <th>GoodsID</th>
+                            <th>Description</th>
                             <th>Quantity</th>                            
                             <th>Buying/Selling</th>
                             <th>Price</th>
-                            <th>Wholesaler</th>
+                            <th>Retailer</th>
                             <th>Bank</th>
                             <th>Credit</th>
                             <th>Credit Status</th>
@@ -56,10 +57,11 @@
                     <tbody>
                         <tr ng-repeat="tran in trans track by $index" class="md-clickable" ng-click="showConfirm($event,tran)">
                             <td>{{tran.goodsId}}</td>
+                            <td>{{tran.des}}</td>
                             <td>{{tran.quantity}}</td>
                             <td>{{tran.state}}</td>
                             <td>{{tran.price}}</td>
-                            <td>{{tran.participant}}</td>
+                            <td>{{tran.retailer}}</td>
                             <td>{{tran.bank}}</td>
                             <td>{{tran.finSup}}</td>
                             <td style="background-color:{{tran.finStatus==='Pending'?'orange':selectColor(tran.finStatus)}}">{{tran.finStatus}}</td>
