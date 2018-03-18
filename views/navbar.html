@@ -1,0 +1,205 @@
+<style>
+
+
+.navcontainer{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding-top: 30px;
+    z-index: 3;
+    transition: all .2s ease-in;
+    box-shadow: none;
+}
+
+md-nav-bar .md-button._md-nav-button.md-unselected{
+    color: rgb(255, 255, 255);    
+}
+
+md-nav-bar .md-button._md-nav-button.md-hover{
+color: rgba(255, 255, 255, 0.986);
+}
+
+.md-button.md-accent {
+    color: rgba(10, 173, 237, 0.945);
+
+}
+
+md-nav-bar .md-nav-item:hover{
+    color: #08b0f3;
+}
+
+#grad1{
+    opacity: 0.85;
+    background-color: #0a0000;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.05),inset 0 -1px 0 rgba(0,0,0,.1);
+    padding-right: .5rem;
+    padding-left: .5rem;
+    position: relative;
+    width: 100%;
+    margin-top: -7vh;
+}
+.carousel-caption{
+    /* margin-bottom: 10vh; */
+}
+
+.navcontainer li:hover{
+  cursor: pointer;
+  padding-left: 2vw;
+  width: 100%;
+  background: rgba(80, 78, 78, 0.1);
+  background: -webkit-linear-gradient(90deg, rgba(225, 225, 225, 0.1), rgba(80, 78, 78, 0));
+  background: linear-gradient(90deg, rgba(225, 225, 225, 0.1), rgba(80, 78, 78, 0));
+}
+
+
+
+.fontsizetab{
+    font-size: 0.9em;
+  }
+
+
+#slides_control {
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+
+@media screen and (min-width: 769px){
+
+    img{
+        position: relative;
+        max-width: 100%;
+        display:block;
+        margin:auto;
+        height: 50vw;
+    }
+  .fontsizetab{
+    font-size: 1em;
+  }
+
+.sidenav1{
+    display: block;
+}
+}
+</style>
+<section class="navcontainer" layout ="column">
+    
+    <div id="slides_control" layout-align="center">
+            <div>
+                <carousel interval="myInterval">
+                <slide ng-repeat="slide in slides" active="slide.active">
+                    <img ng-src="{{slide.image}}" class="imgresponsive" 
+                    style=" position: relative;
+                    max-width: 100%;
+                    display:block;
+                    margin:auto;
+                    height: 50vh;">
+                    <div class="carousel-caption">
+                    <h4>Slide {{$index+1}}</h4>
+                    </div>
+                </slide>
+                </carousel>
+            </div>
+    </div>
+
+    <md-nav-bar
+        id="grad1"
+        md-no-ink-bar="true"
+        md-selected-nav-item="currentNavItem"
+        nav-bar-aria-label="navigation links"
+        
+        >
+
+        <md-button  ng-hide="status()" class="menu md-icon-button" ng-click="open()">
+            <md-icon style="color:white;margin-top:0.4vw;" md-svg-icon="menu"></md-icon>
+        </md-button>
+
+        <md-button ng-show="status()" class="menu md-icon-button" ng-click="close()">
+            <md-icon style="color:white;margin-top:0.4vw;" md-svg-icon="close"></md-icon>
+        </md-button>
+
+        <md-nav-item md-nav-href="#/" name="Home">
+        <b>Home</b>
+
+        </md-nav-item>
+        <!-- <md-icon ng-show="isClicked" style="color:rgb(255, 254, 254);margin-top:1vw;" md-svg-icon="right"></md-icon>
+        
+        <md-nav-item name="{{routeName}}">
+            <p ng-show="isClicked">{{routeName}}</p>            
+        </md-nav-item> -->
+    
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#newTrans/{{user.email}}" ng-click="close('NEW TRANSACTION')" style="text-decoration: none;">NEW TRANSACTION</md-nav-item>              
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#inventory/{{user.email}}" ng-click="close('INVENTORY')" style="text-decoration: none;">INVENTORY</md-nav-item>    
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#balance/{{user.email}}" ng-click="close('CHECK BALANCE')" style="text-decoration: none;">CHECK BALANCE</md-nav-item>         
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#pastTrans/{{user.email}}" ng-click="close('PAST TRANSACTIONS')" style="text-decoration: none;">PAST TRANSACTIONS</md-nav-item>                   
+        <md-nav-item ng-show="isAuthenticated && isRetailer" md-nav-href="/#verifyTrans/{{user.email}}" ng-click="close('VERIFY TRANSACTION')" style="text-decoration: none;">VERIFY TRANSACTION</md-nav-item>                        
+            
+
+        <md-nav-item ng-show="isAuthenticated && isWholesaler" href="/#transReq/{{user.email}}" ng-click="close()" style="text-decoration: none;">TRANSACTION REQUESTS</md-nav-item>          
+                    
+        <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#financeReq/{{user.email}}" ng-click="close()" style="text-decoration: none;">FINANCIAL REQUESTS</md-nav-item>                    
+        <md-nav-item ng-show="isAuthenticated && isBank" md-nav-href="/#bankVerifyReq/{{user.email}}" ng-click="close()" style="text-decoration: none;">VERIFY TRANSACTIONS</md-nav-item>                        
+                                            
+        <span flex></span>
+        <span flex></span>
+        <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/login" layout-align="end" name="Login"><b>Login</b></md-nav-item>
+        <md-nav-item ng-hide="isAuthenticated" md-nav-href="#/signup"  layout-align="end" name="Signup"><b>Signup</b></md-nav-item>
+        <md-nav-item ng-show="isAuthenticated" md-nav-href="#/about" layout-align="end" name="Profile"><b>Profile</b></md-nav-item>
+        <md-nav-item ng-show="isAuthenticated" md-nav-href="#/"  ng-click="logout()" layout-align="end" name="Logout"><b>Logout</b></md-nav-item>                            
+    </md-nav-bar>
+    
+    <!-- <div class="sidenav1">
+
+    <md-sidenav 
+        id="nav1"
+        md-component-id="left"   
+        class="md-sidenav-left"
+        md-whiteframe="4"
+        tabindex="-1"
+        style="
+        opacity:1;
+        height: 100vh;
+        max-width: 30vw;
+        z-index: 9999999999;
+        overflow-x: hidden;
+        position: fixed;
+        "
+       >
+            <md-toolbar>
+            <h4 class="md-toolbar-tools" style="text-align:center">DASHBOARD</h4>
+            </md-toolbar>
+            <md-content class="md-padding" ng-hide="isAuthenticated" layout="column">
+               <span class="md-sub-heading">Please Login if you already Registered!</span>
+               <span class="md-sub-heading">Please Register if you didnt!</span>               
+            </md-content>
+
+            <md-list ng-show="isAuthenticated" class="navcontainer">
+                <ul ng-show="isRetailer">
+
+                    <a href="/#newTrans/{{user.email}}" ng-click="close('NEW TRANSACTION')" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">NEW TRANSACTION</li></a>                        
+                    
+                    <a href="/#inventory/{{user.email}}" ng-click="close('INVENTORY')" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">INVENTORY</li></a>                        
+                    
+                    <a href="/#balance/{{user.email}}" ng-click="close('CHECK BALANCE')" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">CHECK BALANCE</li></a>                        
+                    
+                    <a href="/#pastTrans/{{user.email}}" ng-click="close('PAST TRANSACTIONS')" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">PAST TRANSACTIONS</li></a>                        
+                    
+                    <a href="/#verifyTrans/{{user.email}}" ng-click="close('VERIFY TRANSACTION')" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTION</li></a>                        
+                      
+                </ul>
+
+                <ul ng-show="isWholesaler">
+                    <a href="/#transReq/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li  style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">TRANSACTION REQUESTS</li></a>                        
+                    
+                </ul>
+                <ul ng-show="isBank">
+                    <a href="/#financeReq/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">FINANCIAL REQUESTS</li></a>                        
+                    <a href="/#bankVerifyReq/{{user.email}}" ng-click="close()" style="text-decoration: none;"><li style="margin-top: 0.5em; margin-bottom: 0.3em;" class="fontsizetab">VERIFY TRANSACTIONS</li></a>                        
+                </ul>                    
+                                            
+            </md-list>
+    </md-sidenav> 
+    </div> -->
+
+</section>
