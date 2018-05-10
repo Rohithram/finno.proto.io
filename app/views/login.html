@@ -90,7 +90,21 @@
                 </md-card-title-text>
               </md-card-title>
               <md-card-content >
-                <form name="LoginForm" novalidate>
+
+                <div class="md-padding" >
+                    <label>Choose your category</label><br>
+
+                    <md-radio-group ng-model="user.who" layout="row" layout-xs="column">
+                        
+                        <md-radio-button value="Retailer" class="md-primary">Retailer</md-radio-button>
+                        <md-radio-button value="Wholesaler"> Wholesaler </md-radio-button>
+                        <md-radio-button value="Bank"> Bank</md-radio-button>
+  
+                    </md-radio-group>
+                </div>
+                  
+
+                <form name="LoginForm" class="md-padding" novalidate ng-show="user.who">
     
                     <!--Email-->
                     <md-input-container class="md-icon-float md-block">

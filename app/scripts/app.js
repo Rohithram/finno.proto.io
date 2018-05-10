@@ -181,7 +181,15 @@ var app = angular.module('protoApp', [
             else if(next.$$route.authenticated === false){
               if(Auth.isLoggedIn()){
                 event.preventDefault();
-                $location.path('/');
+                var user = Auth.getUserinfo();
+                console.log("GOTCHA"+user);
+                if(user[0]==="Retailer")
+                  $location.path('/newTrans/'+user[1]);
+                else if(user[0]==="Wholesaler")
+                  $location.path('/transReq/'+user[1]);
+                else if(user[0]==="Bank")
+                  $location.path('/financeReq/'+user[1]);
+
               }
             }
           }

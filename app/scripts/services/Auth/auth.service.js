@@ -32,6 +32,11 @@ angular.module('authServices',[])
       }
     };
 
+    authfactory.getUserinfo=function(){
+        console.log("IN");
+        return [AuthToken.getUserRole(),AuthToken.getID()];
+    };
+
     authfactory.getUser=function(){
       if(AuthToken.getToken()){
         return $http.get("http://52.87.34.178:3000/api/User/"+AuthToken.getID())
@@ -90,6 +95,7 @@ angular.module('authServices',[])
           
           AuthToken.setToken(shuffle(numbers).toString());  
           AuthToken.setID(res.data.email);        
+          AuthToken.setRole(res.data.occupation);
         
           if(user.occupation === roles[0]){
             
@@ -192,8 +198,21 @@ angular.module('authServices',[])
     }
   };
 
+  authTokenfactory.setRole=function(role){
+    if(role){
+      $window.sessionStorage.role = role;
+    }
+    else{
+      delete $window.sessionStorage.role;
+    }
+  };
+
   authTokenfactory.getToken=function(token){
     return $window.sessionStorage.token
+  };
+
+  authTokenfactory.getUserRole=function(role){
+    return $window.sessionStorage.role
   };
 
   authTokenfactory.getID=function(id){

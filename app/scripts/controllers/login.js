@@ -27,23 +27,35 @@ angular.module('protoApp')
       return resp;
     };
 
+    $scope.user.who = "";
+    var status = '00';
     $scope.loginCredentials = function(){
         var islogged = false;
         $http.get("http://52.87.34.178:3000/api/User").then((res=>{
             if(res.status === 200){
               for(var i=0;i<res.data.length;i++){
                 if(res.data[i].email === $scope.credentials.email && res.data[i].Password === $scope.credentials.Password){
-                  alert("Logged in successfully");
-                  islogged = true;
-                  $window.sessionStorage.token = shuffle(numbers).toString();     
-                  AuthToken.setID(res.data[i].email);                          
-                  res.data[i].Password = "";
-                  console.log($window.sessionStorage.token);
-                  $window.location.reload();                  
-                  break;
-                }
+                  status = '10'
+                  if(res.data[i].occupation===$scope.user.who){
+                    status='11';                 
+                    alert("Logged in successfully");
+                    islogged = true;
+                    $window.sessionStorage.token = shuffle(numbers).toString();     
+                    AuthToken.setID(res.data[i].email);       
+                    AuthToken.setRole(res.data[i].occupation);                   
+                    res.data[i].Password = "";
+                    console.log($window.sessionStorage.token);
+                    $window.location.reload(); 
+                    break;
+                  }
               }
-              if(!islogged){
+            }
+            if(status==='10'){
+              alert("Sorry your details are not matching with our records,Please check your occupation")
+              $window.location.reload(); 
+
+            }
+              if(!islogged && status==='00'){
                 delete $window.sessionStorage.token;
                 alert("Please check your credentials");
               }
